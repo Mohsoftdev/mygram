@@ -14,6 +14,15 @@
                     <div class="grow">
                         <a href="/{{$post->user->username}}" class="text-bold">{{$post->user->username}}</a>
                     </div>
+                    @if($post->user_id === auth()->id())
+                        <a href="/p/{{$post->slug}}/edit"><i class="bx bx-message-square-edit text-xl"></i></a>
+                        <form action="/p/{{$post->slug}}/delete" method="POST">
+                            @csrf
+                            <button type="submit">
+                                <i class="bx bx-message-square-x text-xl ms-2 text-red-600"></i>
+                            </button>
+                        </form> 
+                    @endif
                 </div>
             </div>
             <!-- Middle -->

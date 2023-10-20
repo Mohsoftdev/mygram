@@ -17,10 +17,11 @@
 
 
         <!-- Form -->
-        <form action="/p/create" method="post" class="w-full" enctype="multipart/form-data">
+        <form action="/p/{{$post->slug}}/update" method="post" class="w-full" enctype="multipart/form-data">
             @csrf
-            <x-create-edit-form />
-            <x-primary-button class="mt-4">{{ __('Create Post')}}</x-primary-button>
+            @method('PATCH')
+            <x-create-edit-form :post="$post" />
+            <x-primary-button class="mt-4">{{ __('Update Post')}}</x-primary-button>
         </form>
     </div>
 </x-app-layout>

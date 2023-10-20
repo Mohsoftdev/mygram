@@ -30,9 +30,21 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/p/create', [PostController::class, 'create'])->name('create_post')->middleware('auth');
-Route::post('/p/create', [PostController::class, 'store'])->name('store_post')->middleware('auth');
-Route::get('/p/{post:slug}', [PostController::class, 'show'])->name('show_post')->middleware('auth');
+Route::controller(PostController::class)->middleware('auth')->group(function(){
+    Route::get('/', 'index')->name('home_page');
+    Route::get('/p/create', 'create')->name('create_post');
+    Route::post('/p/create', 'store')->name('store_post');
+    Route::get('/p/{post:slug}', 'show')->name('show_post');
+    Route::get('/p/{post:slug}/edit', 'edit')->name('edit_post');
+    Route::patch('/p/{post:slug}/update', 'update')->name('post_update');
+    Route::post('/p/{post:slug}/delete', 'destroy')->name('post_delete');
+});
+
+
 Route::post('/p/{post:slug}/comment', [PostCommentController::class, 'store'])->name('store_comment')->middleware('auth');
+
+Route::get('/explore', [PostController::class, 'explore'])->name('explore');
+
+
 
 require __DIR__.'/auth.php';

@@ -20,6 +20,10 @@ class User extends Authenticatable
         return $this->hasMany(PostComment::class);
     }
 
+    public function suggested_users()
+    {
+        return User::whereNot('id', auth()->id())->get()->shuffle()->take(5);
+    }
 
     use HasApiTokens, HasFactory, Notifiable;
 
