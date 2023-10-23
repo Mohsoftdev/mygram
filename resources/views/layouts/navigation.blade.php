@@ -6,16 +6,11 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('home_page') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                        <x-application-logo class="block h-12 w-auto fill-current text-gray-800" />
                     </a>
                 </div>
 
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('home_page')" :active="request()->routeIs('home_page')">
-                        {{ __('Home') }}
-                    </x-nav-link>
-                </div>
+
             </div>
 
             <!-- Settings Dropdown -->
@@ -34,13 +29,19 @@
                          :'<i class="bx bx-compass text-xl"></i>'
                         !!}
                     </a>
+                    <a href="{{route('create_post')}}">
+                        {!! url()->current() == route('create_post') ?
+                          '<i class="bx bxs-message-square-add text-xl"></i>'
+                         :'<i class="bx bx-message-square-add text-xl"></i>'
+                        !!}
+                    </a>
                 </div>
                 @endauth
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                             <a href="{{auth()->user()->username}}">
-                                <img src="{{auth()->user()->image}}" class="h-8 w-8 rounded-full">
+                                <img src="{{auth()->user()->image == 'https://ui-avatars.com/api/?name='.auth()->user()->name ? auth()->user()->image : asset('storage/' .auth()->user()->image)}}" class="h-8 w-8 rounded-full">
                             </a>
                             <div class="ml-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -59,7 +60,7 @@
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
-                            <x-dropdown-link :href="route('logout')"
+                            <x-dropdown-link :href="route('logout')" class="text-red-600"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 {{ __('Log Out') }}

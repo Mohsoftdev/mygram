@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\LikesController;
 use App\Http\Controllers\PostCommentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,6 +26,8 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+require __DIR__.'/auth.php'; //this should be here not on the bottom (try to put in the bottom)
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -44,7 +48,8 @@ Route::controller(PostController::class)->middleware('auth')->group(function(){
 Route::post('/p/{post:slug}/comment', [PostCommentController::class, 'store'])->name('store_comment')->middleware('auth');
 
 Route::get('/explore', [PostController::class, 'explore'])->name('explore');
+Route::get('/{user:username}', [UserController::class, 'index'])->name('user_profile');
+Route::get('/{user:username}/edit', [UserController::class, 'edit'])->middleware('auth')->name('edit_profile');
+Route::patch('/{user:username}/update', [UserController::class, 'update'])->middleware('auth')->name('update_profile');
 
-
-
-require __DIR__.'/auth.php';
+Route::get('/p/{post:slug}/likes', [LikesController::class, 'like'])->middleware('auth')->name('like_post');

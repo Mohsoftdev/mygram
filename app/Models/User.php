@@ -25,6 +25,11 @@ class User extends Authenticatable
         return User::whereNot('id', auth()->id())->get()->shuffle()->take(5);
     }
 
+    public function likes()
+    {
+        return $this->belongsToMany(Post::class, 'likes_post');
+    }
+
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
@@ -35,7 +40,9 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'username',
+        'bio',
         'image',
+        'private_account',
         'email',
         'password',
     ];
