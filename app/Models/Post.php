@@ -21,14 +21,19 @@ class Post extends Model
         return $this->hasMany(PostComment::class);
     }
 
-    public function likes()
-    {
-        return $this->belongsToMany(User::class, 'likes_post');
-    }
 
-    public function liked(User $user)
+    public function likes()
+{
+    return $this->belongsToMany(User::class, 'likes_post');
+}
+
+
+    public function likedByUser(User $user)
     {
         return $this->likes()->where('user_id', $user->id)->exists();
     }
+
+
+
 
 }

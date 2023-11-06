@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('post_comments', function (Blueprint $table) {
+        Schema::create('follows', function (Blueprint $table) {
             $table->id();
-            $table->text('body');
-            $table->integer('likes')->default(0)->count();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('post_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('following_user_id')->constrained('users')->cascadeOnDelete();
+            $table->boolean('confirmed')->default(false);
+            $table->unique(['user_id', 'follwing_user_id']);
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('post_comments');
+        Schema::dropIfExists('follows');
     }
 };

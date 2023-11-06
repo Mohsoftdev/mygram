@@ -14,29 +14,47 @@ class UserController extends Controller
         return view('users.index', compact('user'));
     }
 
+    //
     public function edit(User $user)
     {
         return view('users.edit', compact('user'));
     }
 
+    //
     public function update(User $user, UpdateUserProfileRequest $request)
     {
+        
         $data = $request->safe()->collect();
 
-  if($request->has('password') && !empty($request->password)) {
-    $data['password'] = Hash::make($request->password);
-  }
+        if($request->has('password') && !empty($request->password)) {
+            $data['password'] = Hash::make($request->password);
+        }
 
-  if ($data->has('image')) {
-    $path = $request->file('image')->store('users', 'public');
-    $data['image'] = '/' . $path;
-  }
+        if ($data->has('image')) {
+            $path = $request->file('image')->store('users', 'public');
+            $data['image'] = '/' . $path;
+        }
 
-  $data['private_account'] = $request->has('private_account');
+        $data['private_account'] = $request->has('private_account');
 
-  $user->update($data->toArray());
+        $user->update($data->toArray());
 
-  session()->flash('success', __('You profile has been updated successfully!'));
-  return redirect()->route('user_profile', $user);
+        session()->flash('success', __('You profile has been updated successfully!'));
+        return redirect()->route('user_profile', $user);
     }
+
+    //
+    public function follow(User $user)
+    {
+        auth()->user()->follow($user);
+        return back();
+    }
+
+    public function unfollow(User $user)
+    {
+        auth()->user()->unfollow($user);
+        return back();
+    }
+
+
 }

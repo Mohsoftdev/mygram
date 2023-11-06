@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\User;
 use App\Models\Post;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -13,11 +13,12 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(User $user)
     {
-        $posts = Post::all();
+        $ids = auth()->user()->following()->wherePivot('confirmed', true)->get()->pluck('id');
+        $posts = Post::whereIn('user_id', $ids)->latest()->get();
         $suggested_users = auth()->user()->suggested_users();
-        return view('posts.index', compact(['posts', 'suggested_users']));
+        return view('posts.index', compact(['posts', 'suggested_users', 'user']));
     }
 
     /**
@@ -68,6 +69,9 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+
+
+        $this->authorize('upadate', $post);
         $data = $request->validate([
             'description' => 'required',
             'image' => ['nullable', 'mimes:jpg, jpeg, gif, png']
@@ -88,6 +92,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        $this->authorize('delete', $post);
         Storage::delete('public/' . $post->image);
         $post->delete();
         return redirect(url('home'));

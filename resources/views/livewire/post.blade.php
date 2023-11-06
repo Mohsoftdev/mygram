@@ -1,7 +1,9 @@
+
 <div class="card">
     <div class="card-header">
         <div class="flex items-center">
-            <img src="{{$post->user->image == 'https://ui-avatars.com/api/?name='.urlencode($post->user->name) ? $post->user->image : asset('storage/' .$post->user->image)}}" alt="" class="me-5 h-9 w-9 rounded-full">
+            <img src="{{str($post->user->image)->startsWith('http') ? $post->user->image : asset('/storage/' . $post->user->image)}}"
+ class="me-5 h-9 w-9 rounded-full">
             <div>
                 <a href="{{ $post->user->username }}" class="font-bold">{{ $post->user->username }}</a>
             </div>
@@ -9,15 +11,15 @@
     </div>
     <div class="card-body">
         <img src="{{asset('storage/'.$post->image)}}" alt="" class="w-full h-[400px] overflow-hidden">
-        <div class="p-4">
-            <a href="/p/{{$post->slug}}/likes">
-                @if($post->liked(auth()->user()))
-                    <i class="bx bxs-heart text-red-600 hover:text-gray-500 text-3xl"></i>
-                @else
-                    <i class="bx bx-heart hover:text-gray-500 text-3xl"></i>
-                @endif
-            </a>
+
+        <div class="p-3 flex flex-row">
+            <livewire:like :post="$post"/>
+            <a href="/p/{{$post->slug}}" class="grow ms-2" onclick="document.getElementById('comment_body').focus()"><i
+                            class="bx bx-comment text-3xl hover:text-gray-400 cursor-pointer ltr:mr-3 rtl:ml-3"></i></a>
         </div>
+        <livewire:likedBy :post="$post" />
+
+
         <div class="p-3">
             <a href="" class="font-bold">{{$post->user->username}}</a>
             {{$post->description}}
@@ -28,7 +30,7 @@
                         View all {{$post->comments->count()}} comments
                     </a>
                 @else
-                @endif
+            @endif
             </div>
         </div>
     </div>

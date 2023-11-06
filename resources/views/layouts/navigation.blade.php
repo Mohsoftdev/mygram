@@ -14,34 +14,50 @@
             </div>
 
             <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ml-6">
+            <div class="hidden sm:flex items-center md:ml-6 justify-center">
                 @auth
-                <div class="md:fex md:flex-row justify-center space-x-3 items-center">
+                <div class="md:flex md:flex-row justify-center space-x-3 items-center">
                     <a href="{{route('home_page')}}">
                         {!! url()->current() == route('home_page') ?
-                          '<i class="bx bxs-home-alt-2 text-xl"></i>'
-                         :'<i class="bx bx-home-alt-2 text-xl"></i>'
+                          '<i class="bx bxs-home-alt-2 text-2xl"></i>'
+                         :'<i class="bx bx-home-alt-2 text-2xl"></i>'
                         !!}
                     </a>
                     <a href="{{route('explore')}}">
                         {!! url()->current() == route('explore') ?
-                          '<i class="bx bxs-compass text-xl"></i>'
-                         :'<i class="bx bx-compass text-xl"></i>'
+                          '<i class="bx bxs-compass text-2xl"></i>'
+                         :'<i class="bx bx-compass text-2xl"></i>'
                         !!}
                     </a>
                     <a href="{{route('create_post')}}">
                         {!! url()->current() == route('create_post') ?
-                          '<i class="bx bxs-message-square-add text-xl"></i>'
-                         :'<i class="bx bx-message-square-add text-xl"></i>'
+                          '<i class="bx bxs-message-square-add text-2xl"></i>'
+                         :'<i class="bx bx-message-square-add text-2xl"></i>'
                         !!}
                     </a>
+                    <div class="hidden md:block">
+                            <x-dropdown width="96">
+                                <x-slot name="trigger">
+                                    <button class="text-[1.6rem] me-2">
+                                        <div class=" position-relative">
+                                            <i class="bx bxs-inbox"></i>
+                                            <livewire:pending-followers-count />
+                                        </div>
+                                    </button>
+                                </x-slot>
+
+                                <x-slot name="content">
+                                    <livewire:pending-followers-list />
+                                </x-slot>
+                            </x-dropdown>
+                    </div>
                 </div>
                 @endauth
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                             <a href="{{auth()->user()->username}}">
-                                <img src="{{auth()->user()->image == 'https://ui-avatars.com/api/?name='.auth()->user()->name ? auth()->user()->image : asset('storage/' .auth()->user()->image)}}" class="h-8 w-8 rounded-full">
+                                <img src="{{str(auth()->user()->image)->startsWith('http') ? auth()->user()->image : asset('/storage/' . auth()->user()->image)}}" class="h-10 w-10 rounded-full">
                             </a>
                             <div class="ml-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -84,18 +100,9 @@
 
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('home_page')" :active="request()->routeIs('home_page')">
-                {{ __('home_page') }}
-            </x-responsive-nav-link>
-        </div>
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
-            <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
-            </div>
 
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">

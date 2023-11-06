@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="grid grid-cols-3 gap-1 md:gap-4 mt-5">
+    <div class="grid grid-cols-3 gap-0 md:gap-4 mt-5 px-3 pb-5 mb-5">
         @foreach($posts as $post)
             <div>
                 <a href="/p/{{$post->slug}}" class="">

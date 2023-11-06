@@ -17,11 +17,13 @@
 
 
         <!-- Form -->
+        @can('update', $post)
         <form action="/p/{{$post->slug}}/update" method="post" class="w-full" enctype="multipart/form-data">
             @csrf
             @method('PATCH')
             <x-create-edit-form :post="$post" />
             <x-primary-button class="mt-4">{{ __('Update Post')}}</x-primary-button>
         </form>
+        @endcan
     </div>
 </x-app-layout>
