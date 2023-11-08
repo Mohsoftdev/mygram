@@ -29,12 +29,9 @@
                          :'<i class="bx bx-compass text-2xl"></i>'
                         !!}
                     </a>
-                    <a href="{{route('create_post')}}">
-                        {!! url()->current() == route('create_post') ?
-                          '<i class="bx bxs-message-square-add text-2xl"></i>'
-                         :'<i class="bx bx-message-square-add text-2xl"></i>'
-                        !!}
-                    </a>
+                    <button onclick="Livewire.dispatch('openModal', {component: 'create-post-modal'})">
+                            <i class="bx bx-message-square-add text-[1.6rem]"></i>
+                    </button>
                     <div class="hidden md:block">
                             <x-dropdown width="96">
                                 <x-slot name="trigger">

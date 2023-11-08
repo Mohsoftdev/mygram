@@ -95,7 +95,7 @@ class PostController extends Controller
         $this->authorize('delete', $post);
         Storage::delete('public/' . $post->image);
         $post->delete();
-        return redirect(url('home'));
+        return redirect(auth()->user()->username);
     }
 
     public function explore()

@@ -7,7 +7,7 @@
         <!-- right-side -->
         <div class="flex w-full flex-col bg-white  md:rounded-r-2xl md:w-5/12 border-2">
             <!-- Top -->
-            <div class="hidden md:block border-b-2">
+            <div class="block border-b-2">
                 <div class="flex items-center p-5">
                     <img src="{{str($post->user->image)->startsWith('http') ? $post->user->image : asset('/storage/' . $post->user->image)}}"
                         class="me-5 rounded-full h-10 w-10">
@@ -15,7 +15,9 @@
                         <a href="/{{$post->user->username}}" class="text-bold">{{$post->user->username}}</a>
                     </div>
                     @can('update', $post)
-                        <a href="/p/{{$post->slug}}/edit"><i class="bx bx-message-square-edit text-xl"></i></a>
+                        <button onclick="Livewire.dispatch('openModal', {component: 'edit-post-modal', arguments: {post: {{$post->id}}}})">
+                            <i class="bx bx-message-square-edit text-xl"></i>
+                        </button>
                         <form action="/p/{{$post->slug}}/delete" method="POST">
                             @csrf
                             <button type="submit">

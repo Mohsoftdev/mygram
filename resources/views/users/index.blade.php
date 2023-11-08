@@ -55,6 +55,25 @@
                 <a class="aspect-square block w-full" href="/p/{{ $post->slug }}">
                     <div class="group relative">
                         <img class="w-full aspect-square object-cover" src="{{asset('storage/'.$post->image)}}">
+                        @if (auth()->id() === $post->user_id)
+                            <div
+                                class="absolute top-0 ltr:left-0 rtl:right-0 w-full h-full flex flex-row justify-center items-center group-hover:bg-black/40">
+                                <ul class="invisible group-hover:visible flex flex-row w-[150px]">
+                                    <li class="flex items-center text-2xl text-white font-bold ltr:mr-2 rtl:ml-2 grow">
+                                        <i class='bx bxs-heart ltr:mr-1 rtl:ml-1'></i>
+                                            <span>
+                                        {{ $post->likes()->count() }}
+                                            </span>
+                                    </li>
+                                    <li class="flex items-center text-2xl text-white font-bold">
+                                        <i class='bx bx-comment ltr:mr-1 rtl:ml-1'></i>
+                                        <span>
+                                        {{ $post->comments()->count() }}
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        @endif
                     </div>
                 </a>
             @endforeach
