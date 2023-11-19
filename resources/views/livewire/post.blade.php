@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="card-body">
-        <img src="{{asset('storage/'.$post->image)}}" alt="" class="w-full h-[400px] overflow-hidden">
+        <img src="{{'storage/'.$post->image}}" alt="" class="w-full h-[400px] overflow-hidden">
 
         <div class="p-3 flex flex-row">
             <livewire:like :post="$post"/>

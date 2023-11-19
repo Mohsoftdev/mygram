@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use Illuminate\Console\View\Components\Component;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 use LivewireUI\Modal\ModalComponent;
 

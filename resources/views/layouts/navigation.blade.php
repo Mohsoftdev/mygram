@@ -2,12 +2,16 @@
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
-            <div class="flex">
+            <div class="flex grow">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('home_page') }}">
                         <x-application-logo class="block h-12 w-auto fill-current text-gray-800" />
                     </a>
+                </div>
+                <!-- Search -->
+                <div class="hidden sm:flex sm:items-center mx-auto">
+                @livewire('search')
                 </div>
 
 
@@ -29,7 +33,7 @@
                          :'<i class="bx bx-compass text-2xl"></i>'
                         !!}
                     </a>
-                    <button onclick="Livewire.dispatch('openModal', {component: 'create-post-modal'})">
+                    <button onclick="Livewire.dispatch('openModal', {component: 'create-post-modal'}  )">
                             <i class="bx bx-message-square-add text-[1.6rem]"></i>
                     </button>
                     <div class="hidden md:block">
@@ -38,7 +42,7 @@
                                     <button class="text-[1.6rem] me-2">
                                         <div class=" position-relative">
                                             <i class="bx bxs-inbox"></i>
-                                            <livewire:pending-followers-count />
+                                            <livewire:pending-followers-count classes="absolute right-0 top-0"/>
                                         </div>
                                     </button>
                                 </x-slot>
@@ -69,6 +73,8 @@
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
+
+
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -90,7 +96,9 @@
                         <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
+                    <livewire:pending-followers-count classes="absolute right-2 top-3"/>
                 </button>
+
             </div>
         </div>
     </div>
@@ -105,6 +113,21 @@
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
+
+                <x-dropdown width="96">
+                                <x-slot name="trigger">
+                                    <x-responsive-nav-link class="cursor-pointer">
+                                        <div class="flex items=center position-relative">
+                                            <span>{{__('Pendig Requests')}}</span>
+                                            <livewire:pending-followers-count classes="absolute right-0"/>
+                                        </div>
+                                    </x-responsive-nav-link>
+                                </x-slot>
+
+                                <x-slot name="content">
+                                    <livewire:pending-followers-list />
+                                </x-slot>
+                            </x-dropdown>
 
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">

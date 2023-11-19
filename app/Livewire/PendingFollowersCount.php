@@ -7,6 +7,7 @@ use Livewire\Component;
 class PendingFollowersCount extends Component
 {
     protected $listeners = ['toggleFollow' => '$refresh', 'requestConfirmed' => '$refresh', 'requestDeleted' => '$refresh'];
+    public $classes;
 
     public function getCountProperty()
     {

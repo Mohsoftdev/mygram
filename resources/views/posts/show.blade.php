@@ -15,7 +15,7 @@
                         <a href="/{{$post->user->username}}" class="text-bold">{{$post->user->username}}</a>
                     </div>
                     @can('update', $post)
-                        <button onclick="Livewire.dispatch('openModal', {component: 'edit-post-modal', arguments: {post: {{$post->id}}}})">
+                        <button onclick="Livewire.dispatch('openModal', {component: {component: {component: 'edit-post-modal', arguments: arguments: arguments: {post: {{$post->id}}}} } })">
                             <i class="bx bx-message-square-edit text-xl"></i>
                         </button>
                         <form action="/p/{{$post->slug}}/delete" method="POST">

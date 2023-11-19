@@ -2,6 +2,7 @@
     <div class="w-7xl bg-gray-200 py-5 flex flex-row items-center">
         <h1 class="grow font-bold text-center">{{__('Create New Post')}}</h1>
         @if($image)
+            <x-button class="me-2">{{__('Add anothor image')}}</x-button>
             <x-button class="me-2" wire:click="save_temp">{{__('Next')}}</x-button>
         @endif
     </div>

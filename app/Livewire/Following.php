@@ -9,6 +9,8 @@ class Following extends Component
 {
     public $userId;
     protected $user;
+    public $classes;
+
 
     protected $listeners = ['unfollowUser' => 'getCountProperty'];
 

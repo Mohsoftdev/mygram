@@ -10,6 +10,7 @@ class Follower extends Component
 
     public $userId;
     protected $user;
+    public $classes;
 
     public function getCountProperty()
     {

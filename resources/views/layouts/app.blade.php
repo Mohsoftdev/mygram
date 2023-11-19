@@ -33,7 +33,7 @@
                 {{ $slot }}
             </main>
         </div>
-        <button onclick="Livewire.dispatch('openModal', {component: 'create-post-modal'})"
+        <button onclick="Livewire.dispatch('openModal', { component: { component: {component: 'create-post-modal'} } })"
         class="md:hidden fixed right-2 bottom-20 w-10 h-10 rounded-full bg-gray-900 flex justify-content-center items-center sm:z-10">
         <i class="bx bx-plus text-3xl text-white ms-1"></i>
         </button>
@@ -62,7 +62,9 @@
         </div>
     @endauth
 
-    @livewireScripts
+    <!-- Before the closing </body> tag -->
+@livewireScripts
+
     @livewire('wire-elements-modal')
     <script defer src="https://unpkg.com/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
     </body>
